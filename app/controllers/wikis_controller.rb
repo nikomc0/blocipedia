@@ -10,10 +10,25 @@ class WikisController < ApplicationController
   end
 
   def new
+    @wiki = Wiki.new
   end
 
   def edit
     @wiki = Wiki.find(params[:id])
+  end
+
+  def create
+    @wiki = Wiki.new
+    @wiki.title = params[:wiki][:title]
+    @wiki.body = params[:wiki][:body]
+
+    if @wiki.save
+      flash[:notice] = "Wiki was created."
+      redirect_to @wiki
+    else
+      flash.now[:alert] = "There was an error saving the wiki."
+      render :edit
+    end
   end
 
   def update
