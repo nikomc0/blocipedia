@@ -5,7 +5,7 @@ RSpec.describe WikisController, type: :controller do
  let(:my_user) { create :user }
  let(:my_wiki) { create :wiki }
 
- before :example do
+ before :each do
    sign_in my_user
  end
 
