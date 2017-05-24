@@ -1,12 +1,11 @@
 require 'rails_helper'
-include RandomData
 
 RSpec.describe WikisController, type: :controller do
- let(:my_user) { create :user }
- let(:my_wiki) { create :wiki }
+ let(:user) { create (:user) }
+ let(:my_wiki) { create (:wiki) }
 
  before :each do
-   sign_in my_user
+   sign_in user
  end
 
   describe "GET #index" do
@@ -42,16 +41,16 @@ RSpec.describe WikisController, type: :controller do
 
   describe "POST create" do
     it "increases the number of wiki by 1" do
-      expect{post :create, wiki: {title: RandomData.random_sentence, body: RandomData.random_paragraph }}.to change(Wiki, :count).by(1)
+      expect{post :create, wiki: {title: Faker::Lorem.sentence, body: Faker::Lorem.paragraphs }}.to change(Wiki, :count).by(1)
     end
 
     it "assigns thew new wiki to @wiki" do
-      post :create, wiki: {title: RandomData.random_sentence, body: RandomData.random_paragraph }
+      post :create, wiki: {title: Faker::Lorem.sentence, body: Faker::Lorem.paragraphs }
       expect(assigns(:wiki)).to eq Wiki.last
     end
 
     it "redirects to the new wiki" do
-      post :create, wiki: {title: RandomData.random_sentence, body: RandomData.random_paragraph }
+      post :create, wiki: {title: Faker::Lorem.sentence, body: Faker::Lorem.paragraphs }
       expect(response).to redirect_to Wiki.last
     end
   end
