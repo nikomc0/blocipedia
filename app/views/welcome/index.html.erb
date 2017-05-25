@@ -1,2 +1,28 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<div class="container-fluid blocipedia-jumbo">
+  <div class="title" align="center">
+    <h1>Blocipedia</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+        <div class="well">
+          <% if user_signed_in? %>
+          <h3><%= current_user.role.capitalize %> Account</h3>
+          <% else %>
+          <h3>Standard Account</h3>
+          <% end %>
+          <h5>Allows For:</h5>
+            <p>Creating Public Wikis</p>
+            <p>Editing Public Wikis</p>
+            <p>Reading Public Wikis</p>
+
+        <% if !user_signed_in? %>
+          <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-success' %>
+        <% else %>
+          <%= link_to "Downgrade to Standard", controller: :charges_controller, method: :downgrade, class: 'btn btn-danger' %>
+        <% end %>
+        </div>
+    </div>
+  </div>
+</div>
