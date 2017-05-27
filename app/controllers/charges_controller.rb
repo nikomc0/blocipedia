@@ -14,7 +14,7 @@ class ChargesController < ApplicationController
       # Stripe customer id not blocipedia id.
       customer: customer.id,
       amount: 15_00,
-      description: "BigMoney Membership- #{current_user.email}",
+      description: "Blocipedia Premium Membership- #{current_user.email}",
       currency: 'usd'
     )
 
@@ -22,7 +22,6 @@ class ChargesController < ApplicationController
 
     flash[:notice] = "Thanks for all the money, #{current_user.email}!
     Feel free to pay me again."
-    redirect_to root_path
 
     rescue Stripe::CardError => e
       flash[:alert] = e.message
@@ -37,16 +36,15 @@ class ChargesController < ApplicationController
     }
   end
 
-  def downgrade
-    @current_user.standard!
+  private
+  def update_role
+    current_user.premium!
 
     if @current_user.save
-      flash[:notice] = "You're account has been downgraded."
+      flash[:notice] = "You're account has been upgraded."
       redirect_to wikis_path
-
     else
       flash[:alert] = "Something went wrong. Please try again."
-      redirect_to root_path
     end
   end
 end

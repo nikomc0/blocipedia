@@ -4,25 +4,32 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
     <div class="col-md-4 text-center">
         <div class="well">
-          <% if user_signed_in? %>
-          <h3><%= current_user.role.capitalize %> Account</h3>
-          <% else %>
           <h3>Standard Account</h3>
-          <% end %>
+          <h3>FREE<h3>
           <h5>Allows For:</h5>
             <p>Creating Public Wikis</p>
             <p>Editing Public Wikis</p>
             <p>Reading Public Wikis</p>
-
-        <% if !user_signed_in? %>
-          <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-success' %>
-        <% else %>
-          <%= link_to "Downgrade to Standard", controller: :charges_controller, method: :downgrade, class: 'btn btn-danger' %>
-        <% end %>
         </div>
     </div>
+
+    <div class="col-md-4 text-center">
+        <div class="well">
+          <h3>Premium Account</h3>
+          <h3>$15.00<h3>
+          <h5>Allows For:</h5>
+            <p>Creating Public/Private Wikis</p>
+            <p>Editing Public/Private Wikis</p>
+            <p>Reading Public/Private Wikis</p>
+        </div>
+    </div>
+  </div>
+  <div class="row text-center">
+    <% if !user_signed_in? %>
+      <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-lg btn-success' %>
+    <% end %>
   </div>
 </div>
