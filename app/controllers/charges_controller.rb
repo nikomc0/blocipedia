@@ -8,6 +8,7 @@ class ChargesController < ApplicationController
       email: current_user.email,
       card: params[:stripeToken]
     )
+    stripe_id(customer)
 
     # Where the magic happens
     charge = Stripe::Charge.create(
@@ -36,7 +37,11 @@ class ChargesController < ApplicationController
     }
   end
 
-  private
+  def stripe_id(customer)
+    current_user.stripe_id = customer.id
+    current_user
+  end
+
   def update_role
     current_user.premium!
 
@@ -45,6 +50,20 @@ class ChargesController < ApplicationController
       redirect_to wikis_path
     else
       flash[:alert] = "Something went wrong. Please try again."
+    end
+  end
+
+  def downgrade
+    customer = Stripe::Customer.retrieve(current_user.stripe_id)
+    customer.delete
+    current_user.standard!
+
+    if current_user.save
+      flash[:notice] = "You have successfully downgraded your account."
+      redirect_to wikis_path
+    else
+      flash.now[:notice] = "Something went wrong. Please try again."
+      redirect_to edit_user_registration_path
     end
   end
 end
