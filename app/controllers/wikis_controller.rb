@@ -1,3 +1,5 @@
+include ApplicationHelper
+
 class WikisController < ApplicationController
   before_action :authenticate_user!
 
