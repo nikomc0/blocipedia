@@ -51,11 +51,11 @@
     <div class="well account-actions text-center">
       <div>
         <h3>Change account status</h3>
-          <% if current_user.premium? %>
-            <%= link_to "Downgrade to Standard", downgrade_user_path(current_user), class: 'btn btn-warning', method: :post %>
-          <% else %>
-            <%= link_to "Upgrade to Premium", new_charge_path, class: 'btn btn-success' %>
-          <% end %>
+        <% if current_user.premium? %>
+          <%= link_to "Downgrade to Standard", downgrade_charge_path(current_user), class: 'btn btn-warning', method: :post %>
+        <% else %>
+          <%= link_to "Upgrade to Premium", new_charge_path, class: 'btn btn-success' %>
+        <% end %>
       </div>
 
       <div>
