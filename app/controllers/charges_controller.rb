@@ -54,8 +54,10 @@ class ChargesController < ApplicationController
   end
 
   def downgrade
+    wiki = Wiki.where(user_id: current_user.id)
     customer = Stripe::Customer.retrieve(current_user.stripe_id)
     customer.delete
+    wiki.update_all(private: nil)
     current_user.standard!
 
     if current_user.save
