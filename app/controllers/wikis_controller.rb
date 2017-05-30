@@ -7,6 +7,11 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
+
+    if @wiki.private && current_user.standard?
+      flash[:alert] = "You must be a premium member to view this Wiki."
+      redirect_to wikis_path
+    end
   end
 
   def new
@@ -21,6 +26,8 @@ class WikisController < ApplicationController
     @wiki = Wiki.new
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
+    @wiki.private = params[:wiki][:private]
+    @wiki.user_id = current_user.id
 
     if @wiki.save
       flash[:notice] = "Wiki was created."

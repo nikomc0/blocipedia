@@ -51,8 +51,9 @@
     <div class="well account-actions text-center">
       <div>
         <h3>Change account status</h3>
+        <h5><%= current_user.role.upcase %></h5>
         <% if current_user.premium? %>
-          <%= link_to "Downgrade to Standard", downgrade_charge_path(current_user), class: 'btn btn-warning', method: :post %>
+          <%= link_to "Downgrade to Standard", downgrade_charge_path(current_user), data: { confirm: "Are you sure? Downgrading will automatically make all your private wiki's public." }, class: 'btn btn-warning', method: :post %>
         <% else %>
           <%= link_to "Upgrade to Premium", new_charge_path, class: 'btn btn-success' %>
         <% end %>
@@ -64,4 +65,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="container">
+  <h3>Wiki's</h3>
+  <%= render current_user.wikis %>
 </div>
