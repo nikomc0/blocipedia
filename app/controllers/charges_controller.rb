@@ -8,6 +8,7 @@ class ChargesController < ApplicationController
       email: current_user.email,
       card: params[:stripeToken]
     )
+    
     stripe_id(customer)
 
     # Where the magic happens
