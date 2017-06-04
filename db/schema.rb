@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170603051719) do
 
   create_table "collaborators", force: :cascade do |t|
@@ -22,6 +23,9 @@ ActiveRecord::Schema.define(version: 20170603051719) do
   # add_index "collaborators", ["id"], name: "index_collaborators_on_id"
   add_index "collaborators", ["user_id"], name: "index_collaborators_on_user_id"
   add_index "collaborators", ["wiki_id"], name: "index_collaborators_on_wiki_id"
+=======
+ActiveRecord::Schema.define(version: 20170524173327) do
+>>>>>>> 73f10da6c975a83b9fdbbe64ebfa5d60d487b008
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -37,7 +41,6 @@ ActiveRecord::Schema.define(version: 20170603051719) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "role"
-    t.string   "stripe_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
