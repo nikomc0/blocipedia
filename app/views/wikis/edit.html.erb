@@ -1,4 +1,6 @@
+<div align="center">
 <h1>Edit Wiki</h1>
+</div>
 
 <div class="row">
   <div class="col-md-2">
@@ -13,6 +15,28 @@
         <%= f.label :body %>
         <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
       </div>
+
+      <h3>Add Collaborators</h3>
+
+      <% if @wiki.user_id == current_user.id || current_user.admin? %>
+        <div class="form-group">
+        <% User.all.each do |user| %>
+
+          <% if @wiki.users.include? user %>
+          <div>
+            <%= link_to "Remove", wiki_collaborator_path(@wiki, @wiki.collaborators.find_by_user_id(user.id).id), method: :delete, class: 'btn btn-danger' %>
+            <strong><%= user.email %></strong>
+          </div>
+          <% else %>
+          <div>
+            <%= link_to "Add", wiki_collaborators_path(@wiki, user_id: user.id), method: :post, class: 'btn btn-info' %>
+            <strong><%= user.email %></strong>
+          </div>
+          <% end %>
+        <% end %>
+        </div>
+      <% end %>
+
       <div class="form-group">
         <%= f.submit "Save", class: 'btn btn-success' %>
       </div>
